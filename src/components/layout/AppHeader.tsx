@@ -53,13 +53,13 @@ export function AppHeader({
             <div
               className={
                 autoRefreshEnabled
-                  ? 'inline-flex h-10 items-center gap-2 rounded-xl border border-primary/60 bg-primary/15 px-3 text-sm font-medium text-white shadow-sm shadow-primary/20'
-                  : 'inline-flex h-10 items-center gap-2 rounded-xl border border-border bg-card px-3 text-sm font-medium text-slate-100'
+                  ? 'relative inline-flex h-10 items-center gap-2 rounded-xl border border-primary/60 bg-primary/15 px-3 text-sm font-medium text-white shadow-sm shadow-primary/20'
+                  : 'relative inline-flex h-10 items-center gap-2 rounded-xl border border-border bg-card px-3 text-sm font-medium text-slate-100'
               }
             >
               <TimerReset className="size-4" aria-hidden="true" />
               <span>Auto</span>
-              <AutoRefreshMenu value={autoRefreshSeconds} onChange={onAutoRefreshSecondsChange} />
+              <AutoRefreshMenu value={autoRefreshSeconds} onChange={onAutoRefreshSecondsChange} menuClassName="left-0 right-0 w-full" />
             </div>
             <Button type="button" variant="secondary" onClick={onRefresh} disabled={isRefreshing}>
               <RefreshCw className={isRefreshing ? 'size-4 animate-spin' : 'size-4'} aria-hidden="true" />
@@ -74,10 +74,12 @@ export function AppHeader({
 
 function AutoRefreshMenu({
   value,
-  onChange
+  onChange,
+  menuClassName
 }: {
   value: number
   onChange: (seconds: number) => void
+  menuClassName?: string
 }) {
   const [open, setOpen] = useState(false)
   const options = [
@@ -90,7 +92,7 @@ function AutoRefreshMenu({
 
   return (
     <span
-      className="relative"
+      className="contents"
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) {
           setOpen(false)
@@ -99,7 +101,7 @@ function AutoRefreshMenu({
     >
       <button
         type="button"
-        className="inline-flex h-7 min-w-14 items-center justify-between gap-1 rounded-md px-1 text-xs font-semibold text-white outline-none hover:text-blue-200 focus-visible:ring-2 focus-visible:ring-primary/60"
+        className="inline-flex h-7 w-14 items-center justify-between gap-1 rounded-md px-1 text-xs font-semibold text-white outline-none hover:text-blue-200 focus-visible:ring-2 focus-visible:ring-primary/60"
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={() => setOpen((current) => !current)}
@@ -109,7 +111,7 @@ function AutoRefreshMenu({
       </button>
       {open ? (
         <div
-          className="absolute right-0 top-9 z-50 w-24 overflow-hidden rounded-lg border border-border bg-slate-950 py-1 shadow-xl shadow-black/40"
+          className={`absolute top-11 z-50 overflow-hidden rounded-lg border border-border bg-slate-950 py-1 shadow-xl shadow-black/40 ${menuClassName ?? 'right-0 w-14'}`}
           role="listbox"
         >
           {options.map((option) => (

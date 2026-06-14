@@ -19,19 +19,19 @@ export function KPICard({ label, value, trend, tone, icon: Icon }: KPICardProps)
   const TrendIcon = tone === 'success' || tone === 'primary' ? ArrowUpRight : ArrowDownRight
 
   return (
-    <Card className="p-4">
-      <div className="flex items-start justify-between gap-3">
-        <div className={cn('rounded-xl border p-2.5', toneClasses[tone])}>
+    <Card className="flex h-[136px] flex-col justify-between p-4">
+      <div className="flex h-10 items-center justify-between gap-3">
+        <div className={cn('flex size-10 items-center justify-center rounded-xl border', toneClasses[tone])}>
           <Icon className="size-5" aria-hidden="true" />
         </div>
-        <div className={cn('flex items-center gap-1 text-xs font-medium', toneClasses[tone], 'border-0 bg-transparent p-0')}>
+        <div className={cn('flex h-10 items-center gap-1 text-xs font-bold', toneClasses[tone], 'border-0 bg-transparent p-0')}>
           <TrendIcon className="size-3.5" aria-hidden="true" />
           {trend}
         </div>
       </div>
-      <div className="mt-4">
-        <p className="text-3xl font-semibold tracking-normal text-white">{value}</p>
-        <p className="mt-1 text-sm text-slate-400">{label}</p>
+      <div className="text-center">
+        <p className="text-3xl font-bold tracking-normal text-white">{value}</p>
+        <p className="mt-1 text-sm font-semibold text-slate-300">{label}</p>
       </div>
     </Card>
   )

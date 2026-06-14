@@ -15,7 +15,7 @@ export function SyncRunbookPanel({ shopify }: SyncRunbookPanelProps) {
   return (
     <section className="space-y-3">
       <SectionHeader title="Sync Runbook" description="Automated recovery and operator actions" />
-      <Card className="h-[420px] p-4">
+      <Card className="h-[405px] p-4">
         <div className="space-y-3">
           <RunbookItem
             icon={RadioTower}
@@ -66,13 +66,13 @@ function RunbookItem({
   }[tone]
 
   return (
-    <div className="flex items-start gap-3 rounded-lg border border-border bg-slate-950/60 p-3">
+    <div className="flex items-start gap-3 rounded-lg border border-border bg-slate-950/60 p-3 transition-[border-color,background-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-slate-700 hover:bg-slate-950/80 hover:shadow-lg hover:shadow-black/20">
       <div className={`rounded-lg border p-2 ${toneClass}`}>
         <Icon className="size-4" aria-hidden="true" />
       </div>
       <div className="min-w-0">
-        <p className="text-sm font-semibold text-slate-100">{title}</p>
-        <p className="mt-0.5 text-xs leading-5 text-slate-400">{detail}</p>
+        <p className="text-sm font-bold text-slate-100">{title}</p>
+        <p className="mt-0.5 text-xs font-semibold leading-5 text-slate-300">{detail}</p>
       </div>
     </div>
   )

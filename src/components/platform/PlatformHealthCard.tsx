@@ -26,27 +26,27 @@ export function PlatformHealthCard({ health, onRetry, className }: PlatformHealt
         <StatusBadge status={health.status} />
       </div>
       <div className="mt-5 grid grid-cols-1 gap-3 text-sm">
-        <div className="flex items-center justify-between gap-4 rounded-lg border border-border bg-slate-950/60 px-3 py-2.5">
+        <div className="flex items-center justify-between gap-4 rounded-lg border border-border bg-slate-950/60 px-3 py-2.5 transition-[border-color,background-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-slate-700 hover:bg-slate-950/80 hover:shadow-lg hover:shadow-black/20">
           <span className="inline-flex items-center gap-2 text-slate-400">
             <Gauge className="size-4" aria-hidden="true" />
             Response Time
           </span>
-          <span className="font-medium text-slate-100">{health.responseTimeMs}ms</span>
+          <span className="font-bold text-slate-100">{health.responseTimeMs}ms</span>
         </div>
-        <div className="flex items-center justify-between gap-4 rounded-lg border border-border bg-slate-950/60 px-3 py-2.5">
+        <div className="flex items-center justify-between gap-4 rounded-lg border border-border bg-slate-950/60 px-3 py-2.5 transition-[border-color,background-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-slate-700 hover:bg-slate-950/80 hover:shadow-lg hover:shadow-black/20">
           <span className="inline-flex items-center gap-2 text-slate-400">
             <Clock className="size-4" aria-hidden="true" />
             Last Success
           </span>
-          <span className="font-medium text-slate-100">{formatDateTime(health.lastSuccessfulSync)}</span>
+          <span className="font-bold text-slate-100">{formatDateTime(health.lastSuccessfulSync)}</span>
         </div>
         {health.delayMinutes > 0 ? (
-          <div className="flex items-center justify-between gap-4 rounded-lg border border-warning/30 bg-warning/10 px-3 py-2.5">
+          <div className="flex items-center justify-between gap-4 rounded-lg border border-warning/30 bg-warning/10 px-3 py-2.5 transition-[border-color,background-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-warning/50 hover:bg-warning/15 hover:shadow-lg hover:shadow-black/20">
             <span className="inline-flex items-center gap-2 text-amber-300">
               <RotateCcw className="size-4" aria-hidden="true" />
               Delay
             </span>
-            <span className="font-medium text-amber-200">{formatRelativeMinutes(health.delayMinutes)}</span>
+            <span className="font-bold text-amber-200">{formatRelativeMinutes(health.delayMinutes)}</span>
           </div>
         ) : null}
       </div>

@@ -1,5 +1,6 @@
 import { useRouter } from '@tanstack/react-router'
 import { Suspense, use, useCallback, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { AlertsPanel } from '~/components/alerts/AlertsPanel'
 import { AlertIntelligencePanel } from '~/components/alerts/AlertIntelligencePanel'
 import { KPISection } from '~/components/dashboard/KPISection'
@@ -9,6 +10,7 @@ import { PlatformHealthSection } from '~/components/platform/PlatformHealthSecti
 import { SyncRunbookPanel } from '~/components/platform/SyncRunbookPanel'
 import { AsyncErrorBoundary } from '~/components/shared/AsyncErrorBoundary'
 import { ErrorState } from '~/components/shared/ErrorState'
+import { cn } from '~/lib/utils'
 import { mergeInventory } from '~/services/mockApi'
 import { fetchTikTokData } from '~/services/platformApi'
 import type { ShopifyData, TikTokData } from '~/types/inventory'
@@ -28,6 +30,11 @@ export function DashboardPage({ shopify, tiktokPromise: initialTikTokPromise, la
   const [autoRefreshSeconds, setAutoRefreshSeconds] = useState(0)
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [showInventoryErrorToast, setShowInventoryErrorToast] = useState(true)
+  const [canPortalToast, setCanPortalToast] = useState(false)
+
+  useEffect(() => {
+    setCanPortalToast(true)
+  }, [])
 
   useEffect(() => {
     if (!syncedLoaderData.current) {
@@ -86,24 +93,32 @@ export function DashboardPage({ shopify, tiktokPromise: initialTikTokPromise, la
         autoRefreshSeconds={autoRefreshSeconds}
         onAutoRefreshSecondsChange={setAutoRefreshSeconds}
       />
-      <main className="mx-auto grid max-w-[1640px] grid-cols-1 gap-5 px-4 py-4 sm:px-5 lg:px-6 xl:grid-cols-[minmax(0,1fr)_340px_360px] xl:items-start 2xl:grid-cols-[minmax(0,1fr)_380px_400px]">
-        <div className="space-y-5 xl:min-w-0">
+      <main
+        className={cn(
+          'mx-auto grid max-w-[1640px] grid-cols-1 gap-5 px-4 py-4 sm:px-5 lg:px-6 xl:grid-cols-[minmax(0,1fr)_340px_360px] xl:items-start 2xl:grid-cols-[minmax(0,1fr)_380px_400px]',
+          isRefreshing && 'dashboard-refreshing'
+        )}
+      >
+        <div className="dashboard-panel space-y-5 xl:min-w-0">
           <KPISection shopifyInventory={shopify.inventory} tiktokPromise={tiktokPromise} resetKey={resetKey} />
           <AsyncErrorBoundary
             resetKey={resetKey}
             fallback={() => (
               <>
                 <InventoryTable inventory={mergeInventory(shopify.inventory)} loadingTikTok />
-                {showInventoryErrorToast ? (
-                  <ErrorState
-                    compact
-                    className="fixed bottom-4 right-4 z-50 w-[min(360px,calc(100vw-2rem))] shadow-2xl shadow-black/50"
-                    title="Unable to load TikTok inventory"
-                    description="The table is using Shopify stock until TikTok responds."
-                    onRetry={retryTikTok}
-                    onClose={() => setShowInventoryErrorToast(false)}
-                  />
-                ) : null}
+                {showInventoryErrorToast && canPortalToast
+                  ? createPortal(
+                      <ErrorState
+                        compact
+                        className="toast-enter fixed bottom-4 right-4 z-50 w-[min(360px,calc(100vw-2rem))] shadow-2xl shadow-black/50"
+                        title="Unable to load TikTok inventory"
+                        description="The table is using Shopify stock until TikTok responds."
+                        onRetry={retryTikTok}
+                        onClose={() => setShowInventoryErrorToast(false)}
+                      />,
+                      document.body
+                    )
+                  : null}
               </>
             )}
           >
@@ -112,7 +127,7 @@ export function DashboardPage({ shopify, tiktokPromise: initialTikTokPromise, la
             </Suspense>
           </AsyncErrorBoundary>
         </div>
-        <div className="space-y-5 xl:min-w-0">
+        <div className="dashboard-panel dashboard-panel-delay-1 space-y-5 xl:min-w-0">
           <PlatformHealthSection
             shopify={shopify}
             tiktokPromise={tiktokPromise}
@@ -121,7 +136,7 @@ export function DashboardPage({ shopify, tiktokPromise: initialTikTokPromise, la
           />
           <SyncRunbookPanel shopify={shopify} />
         </div>
-        <div className="space-y-5 xl:min-w-0">
+        <div className="dashboard-panel dashboard-panel-delay-2 space-y-5 xl:min-w-0">
           <AlertsPanel
             shopifyInventory={shopify.inventory}
             tiktokPromise={tiktokPromise}

@@ -71,7 +71,7 @@ function AlertInsightCard({
   const total = Math.max(alerts.length, 1)
 
   return (
-    <Card className="h-[420px] p-4">
+    <Card className="h-[405px] p-4">
       <div className="grid grid-cols-3 gap-2">
         <InsightMetric icon={ShieldAlert} label="Critical" value={critical} tone="error" />
         <InsightMetric icon={TriangleAlert} label="Warning" value={warning} tone="warning" />
@@ -84,7 +84,7 @@ function AlertInsightCard({
           <div className="bg-primary" style={{ width: `${Math.max(0, ((total - critical - warning) / total) * 100)}%` }} />
         </div>
       </div>
-      <div className="mt-4 rounded-lg border border-border bg-slate-950/60 p-3">
+      <div className="mt-4 rounded-lg border border-border bg-slate-950/60 p-3 transition-[border-color,background-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-slate-700 hover:bg-slate-950/80 hover:shadow-lg hover:shadow-black/20">
         <div className="flex items-start gap-3">
           <div className="rounded-lg border border-primary/40 bg-primary/10 p-2 text-blue-300">
             <Boxes className="size-4" aria-hidden="true" />
@@ -98,7 +98,7 @@ function AlertInsightCard({
         </div>
       </div>
       {loading || degraded ? (
-        <div className="mt-4 flex items-center justify-between gap-3 rounded-lg border border-border bg-slate-950/60 p-3">
+        <div className="mt-4 flex items-center justify-between gap-3 rounded-lg border border-border bg-slate-950/60 p-3 transition-[border-color,background-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-slate-700 hover:bg-slate-950/80 hover:shadow-lg hover:shadow-black/20">
           <p className="text-xs text-slate-400">
             {degraded ? 'TikTok insight unavailable. Shopify-only summary shown.' : 'TikTok insight loading.'}
           </p>
@@ -127,12 +127,14 @@ function InsightMetric({
   }[tone]
 
   return (
-    <div className="rounded-lg border border-border bg-slate-950/60 p-3">
-      <div className={`mb-3 inline-flex rounded-lg border p-1.5 ${toneClass}`}>
+    <div className="flex h-[100px] flex-col justify-between rounded-lg border border-border bg-slate-950/60 p-3 transition-[border-color,background-color,transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:border-slate-700 hover:bg-slate-950/80 hover:shadow-lg hover:shadow-black/20">
+      <div className={`flex size-7 items-center justify-center rounded-lg border ${toneClass}`}>
         <Icon className="size-3.5" aria-hidden="true" />
       </div>
-      <p className="text-lg font-semibold text-white">{value}</p>
-      <p className="mt-0.5 text-xs text-slate-500">{label}</p>
+      <div className="text-center">
+        <p className="text-lg font-bold text-white">{value}</p>
+        <p className="mt-0.5 text-xs font-semibold text-slate-400">{label}</p>
+      </div>
     </div>
   )
 }
