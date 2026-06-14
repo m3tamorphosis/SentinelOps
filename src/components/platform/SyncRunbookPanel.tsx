@@ -15,7 +15,7 @@ export function SyncRunbookPanel({ shopify }: SyncRunbookPanelProps) {
   return (
     <section className="space-y-3">
       <SectionHeader title="Sync Runbook" description="Automated recovery and operator actions" />
-      <Card className="h-[410px] p-4">
+      <Card className="h-[420px] p-4">
         <div className="space-y-3">
           <RunbookItem
             icon={RadioTower}

@@ -78,8 +78,8 @@ export function InventoryTable({ inventory, loadingTikTok = false }: InventoryTa
           </div>
         }
       />
-      <div className="flex overflow-hidden rounded-xl border border-border bg-card shadow-lg shadow-black/20 xl:min-h-[770px] xl:flex-col">
-        <div className="overflow-x-auto xl:flex-1">
+      <div className="flex h-[815px] flex-col overflow-hidden rounded-xl border border-border bg-card shadow-lg shadow-black/20">
+        <div className="flex-1 overflow-x-auto overflow-y-hidden">
           <table className="w-full min-w-[720px] table-auto border-collapse text-sm xl:min-w-0 xl:table-fixed xl:text-[13px]">
             <colgroup>
               <col className="xl:w-[23%]" />

@@ -167,6 +167,106 @@ const shopifyInventory: Array<InventoryItem> = [
     velocity: 17,
     syncStatus: 'pending',
     risk: 'low'
+  },
+  {
+    id: 'sku-1017',
+    product: 'RidgeLine Cargo Pant',
+    sku: 'RDL-CRG-ASH-32',
+    shopifyStock: 46,
+    reorderPoint: 38,
+    velocity: 14,
+    syncStatus: 'pending',
+    risk: 'medium'
+  },
+  {
+    id: 'sku-1018',
+    product: 'Nova Seamless Tank',
+    sku: 'NVA-TNK-BLS-M',
+    shopifyStock: 63,
+    reorderPoint: 42,
+    velocity: 21,
+    syncStatus: 'pending',
+    risk: 'medium'
+  },
+  {
+    id: 'sku-1019',
+    product: 'Echo Training Glove',
+    sku: 'ECH-GLV-BLK-L',
+    shopifyStock: 22,
+    reorderPoint: 26,
+    velocity: 9,
+    syncStatus: 'pending',
+    risk: 'high'
+  },
+  {
+    id: 'sku-1020',
+    product: 'Cinder Trail Short',
+    sku: 'CND-SRT-RST-M',
+    shopifyStock: 88,
+    reorderPoint: 44,
+    velocity: 18,
+    syncStatus: 'pending',
+    risk: 'low'
+  },
+  {
+    id: 'sku-1021',
+    product: 'Prism Running Belt',
+    sku: 'PRS-BLT-SMK-OS',
+    shopifyStock: 16,
+    reorderPoint: 24,
+    velocity: 7,
+    syncStatus: 'pending',
+    risk: 'high'
+  },
+  {
+    id: 'sku-1022',
+    product: 'Crest Fleece Crew',
+    sku: 'CRS-CRW-MOS-L',
+    shopifyStock: 132,
+    reorderPoint: 55,
+    velocity: 20,
+    syncStatus: 'pending',
+    risk: 'low'
+  },
+  {
+    id: 'sku-1023',
+    product: 'Ion Recovery Wrap',
+    sku: 'ION-WRP-GRY-OS',
+    shopifyStock: 7,
+    reorderPoint: 18,
+    velocity: 5,
+    syncStatus: 'pending',
+    risk: 'critical'
+  },
+  {
+    id: 'sku-1024',
+    product: 'Atlas Duffel 40L',
+    sku: 'ATL-DFL-BLK-40',
+    shopifyStock: 71,
+    reorderPoint: 36,
+    velocity: 12,
+    syncStatus: 'pending',
+    risk: 'medium'
+  },
+  {
+    id: 'sku-1025',
+    product: 'Solstice Windbreaker',
+    sku: 'SLS-WND-CLY-M',
+    shopifyStock: 39,
+    reorderPoint: 34,
+    velocity: 13,
+    syncStatus: 'pending',
+    risk: 'medium'
+  },
+  {
+    id: 'sku-1026',
+    product: 'Tempo Knit Beanie',
+    sku: 'TMP-BNE-CHR-OS',
+    shopifyStock: 104,
+    reorderPoint: 48,
+    velocity: 16,
+    syncStatus: 'pending',
+    risk: 'low'
   }
 ]
 
@@ -186,7 +286,17 @@ const tiktokInventory: TikTokData['inventory'] = [
   { id: 'sku-1013', sku: 'VCT-SHL-SGE-L', tiktokStock: 39 },
   { id: 'sku-1014', sku: 'ORB-SLG-ONY-OS', tiktokStock: 64 },
   { id: 'sku-1015', sku: 'TRR-MAT-GRN-72', tiktokStock: 9 },
-  { id: 'sku-1016', sku: 'BCN-VST-RST-M', tiktokStock: 153 }
+  { id: 'sku-1016', sku: 'BCN-VST-RST-M', tiktokStock: 153 },
+  { id: 'sku-1017', sku: 'RDL-CRG-ASH-32', tiktokStock: 51 },
+  { id: 'sku-1018', sku: 'NVA-TNK-BLS-M', tiktokStock: 57 },
+  { id: 'sku-1019', sku: 'ECH-GLV-BLK-L', tiktokStock: 31 },
+  { id: 'sku-1020', sku: 'CND-SRT-RST-M', tiktokStock: 88 },
+  { id: 'sku-1021', sku: 'PRS-BLT-SMK-OS', tiktokStock: 13 },
+  { id: 'sku-1022', sku: 'CRS-CRW-MOS-L', tiktokStock: 132 },
+  { id: 'sku-1023', sku: 'ION-WRP-GRY-OS', tiktokStock: 0 },
+  { id: 'sku-1024', sku: 'ATL-DFL-BLK-40', tiktokStock: 66 },
+  { id: 'sku-1025', sku: 'SLS-WND-CLY-M', tiktokStock: 45 },
+  { id: 'sku-1026', sku: 'TMP-BNE-CHR-OS', tiktokStock: 104 }
 ]
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
