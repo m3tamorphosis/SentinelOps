@@ -10,6 +10,7 @@ import { SyncRunbookPanel } from '~/components/platform/SyncRunbookPanel'
 import { AsyncErrorBoundary } from '~/components/shared/AsyncErrorBoundary'
 import { ErrorState } from '~/components/shared/ErrorState'
 import { mergeInventory } from '~/services/mockApi'
+import { fetchTikTokData } from '~/services/platformApi'
 import type { ShopifyData, TikTokData } from '~/types/inventory'
 
 interface DashboardPageProps {
@@ -101,17 +102,4 @@ function InventoryTableWithTikTok({
   const tiktok = use(tiktokPromise)
 
   return <InventoryTable inventory={mergeInventory(shopify.inventory, tiktok)} />
-}
-
-async function fetchTikTokData(): Promise<TikTokData> {
-  const response = await fetch(`/tiktok_data?retry=${Date.now()}`, {
-    cache: 'no-store'
-  })
-
-  if (!response.ok) {
-    const body = (await response.json().catch(() => null)) as { error?: string } | null
-    throw new Error(body?.error ?? 'Unable to load TikTok inventory')
-  }
-
-  return (await response.json()) as TikTokData
 }

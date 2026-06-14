@@ -1,11 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { DashboardPage } from '~/components/dashboard/DashboardPage'
-import { getShopifyData, getTikTokData } from '~/services/mockApi'
+import { fetchShopifyData, fetchTikTokData } from '~/services/platformApi'
 
 export const Route = createFileRoute('/')({
   loader: async () => {
-    const tiktokPromise = getTikTokData()
-    const shopify = await getShopifyData()
+    const tiktokPromise = fetchTikTokData()
+    const shopify = await fetchShopifyData()
 
     return {
       shopify,

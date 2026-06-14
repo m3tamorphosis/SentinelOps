@@ -19,11 +19,11 @@ SentinelOps is a fullstack operational dashboard for Shopify inventory, TikTok i
 The dashboard route starts TikTok and Shopify work independently:
 
 ```ts
-const tiktokPromise = getTikTokData()
-const shopify = await getShopifyData()
+const tiktokPromise = fetchTikTokData()
+const shopify = await fetchShopifyData()
 ```
 
-Shopify is the only awaited dependency for initial route rendering. TikTok is passed to React as a promise and consumed behind Suspense boundaries. The app never uses `Promise.all()` for page rendering, so a slow or failed TikTok request cannot block Shopify inventory.
+Both calls go through the REST endpoints (`/shopify_data` and `/tiktok_data`). Shopify is the only awaited dependency for initial route rendering. TikTok is passed to React as a promise and consumed behind Suspense boundaries. The app never uses `Promise.all()` for page rendering, so a slow or failed TikTok request cannot block Shopify inventory.
 
 ## Suspense Strategy
 
