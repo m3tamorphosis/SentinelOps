@@ -22,10 +22,10 @@ export function KPISection({ shopifyInventory, tiktokPromise, resetKey }: KPISec
       <KPICard icon={CircleOff} label="Critical Stock" value={String(criticalStock)} trend="+1 today" tone="error" />
       <AsyncErrorBoundary
         resetKey={resetKey}
-        fallback={() => <KPICard icon={RefreshCw} label="Sync Issues" value="!" trend="Retry" tone="error" />}
+        fallback={() => <KPICard icon={RefreshCw} label="Sync Issues" value="N/A" trend="TikTok failed" tone="error" />}
       >
         <Suspense
-          fallback={<KPICard icon={RefreshCw} label="Sync Issues" value="..." trend="TikTok pending" tone="primary" />}
+          fallback={<KPICard icon={RefreshCw} label="Sync Issues" value="N/A" trend="TikTok pending" tone="primary" />}
         >
           <SyncIssuesCard shopifyInventory={shopifyInventory} tiktokPromise={tiktokPromise} />
         </Suspense>
