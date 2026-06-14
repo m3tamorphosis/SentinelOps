@@ -1,0 +1,10 @@
+node_modules
+.output
+.nitro
+.tanstack
+dist
+.env
+.env.local
+coverage
+src/routeTree.gen.ts
+.dev-server.*.log
