@@ -71,7 +71,7 @@ function AlertInsightCard({
   const total = Math.max(alerts.length, 1)
 
   return (
-    <Card className="h-[40px] p-4">
+    <Card className="h-[420px] p-4">
       <div className="grid grid-cols-3 gap-2">
         <InsightMetric icon={ShieldAlert} label="Critical" value={critical} tone="error" />
         <InsightMetric icon={TriangleAlert} label="Warning" value={warning} tone="warning" />

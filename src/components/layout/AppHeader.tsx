@@ -50,7 +50,7 @@ export function AppHeader({
           </div>
           <div className="flex items-center gap-3">
             <p className="text-xs text-slate-500">Last updated {formatDateTime(lastUpdated)}</p>
-            <label
+            <div
               className={
                 autoRefreshEnabled
                   ? 'inline-flex h-10 items-center gap-2 rounded-xl border border-primary/60 bg-primary/15 px-3 text-sm font-medium text-white shadow-sm shadow-primary/20'
@@ -60,7 +60,7 @@ export function AppHeader({
               <TimerReset className="size-4" aria-hidden="true" />
               <span>Auto</span>
               <AutoRefreshMenu value={autoRefreshSeconds} onChange={onAutoRefreshSecondsChange} />
-            </label>
+            </div>
             <Button type="button" variant="secondary" onClick={onRefresh} disabled={isRefreshing}>
               <RefreshCw className={isRefreshing ? 'size-4 animate-spin' : 'size-4'} aria-hidden="true" />
               Refresh

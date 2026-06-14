@@ -27,6 +27,7 @@ export function DashboardPage({ shopify, tiktokPromise: initialTikTokPromise, la
   const [tiktokPromise, setTikTokPromise] = useState<Promise<TikTokData>>(initialTikTokPromise)
   const [autoRefreshSeconds, setAutoRefreshSeconds] = useState(0)
   const [isRefreshing, setIsRefreshing] = useState(false)
+  const [showInventoryErrorToast, setShowInventoryErrorToast] = useState(true)
 
   useEffect(() => {
     if (!syncedLoaderData.current) {
@@ -45,6 +46,7 @@ export function DashboardPage({ shopify, tiktokPromise: initialTikTokPromise, la
 
     refreshInFlight.current = true
     setIsRefreshing(true)
+    setShowInventoryErrorToast(true)
     setResetKey((key) => key + 1)
 
     try {
@@ -68,6 +70,7 @@ export function DashboardPage({ shopify, tiktokPromise: initialTikTokPromise, la
   }, [autoRefreshSeconds, refreshDashboard])
 
   function retryTikTok() {
+    setShowInventoryErrorToast(true)
     setResetKey((key) => key + 1)
     setTikTokPromise(fetchTikTokData())
   }
@@ -89,15 +92,19 @@ export function DashboardPage({ shopify, tiktokPromise: initialTikTokPromise, la
           <AsyncErrorBoundary
             resetKey={resetKey}
             fallback={() => (
-              <div className="space-y-4">
+              <>
                 <InventoryTable inventory={mergeInventory(shopify.inventory)} loadingTikTok />
-                <ErrorState
-                  compact
-                  title="Unable to load TikTok inventory"
-                  description="The table is using Shopify stock until TikTok responds."
-                  onRetry={retryTikTok}
-                />
-              </div>
+                {showInventoryErrorToast ? (
+                  <ErrorState
+                    compact
+                    className="fixed bottom-4 right-4 z-50 w-[min(360px,calc(100vw-2rem))] shadow-2xl shadow-black/50"
+                    title="Unable to load TikTok inventory"
+                    description="The table is using Shopify stock until TikTok responds."
+                    onRetry={retryTikTok}
+                    onClose={() => setShowInventoryErrorToast(false)}
+                  />
+                ) : null}
+              </>
             )}
           >
             <Suspense fallback={<InventoryTable inventory={mergeInventory(shopify.inventory)} loadingTikTok />}>

@@ -1,4 +1,5 @@
-import { AlertTriangle } from 'lucide-react'
+import { AlertTriangle, X } from 'lucide-react'
+import { Button } from '~/components/ui/button'
 import { Card } from '~/components/ui/card'
 import { RetryButton } from '~/components/shared/RetryButton'
 import { cn } from '~/lib/utils'
@@ -7,11 +8,12 @@ interface ErrorStateProps {
   title: string
   description: string
   onRetry: () => void
+  onClose?: () => void
   compact?: boolean
   className?: string
 }
 
-export function ErrorState({ title, description, onRetry, compact = false, className }: ErrorStateProps) {
+export function ErrorState({ title, description, onRetry, onClose, compact = false, className }: ErrorStateProps) {
   return (
     <Card className={cn(compact ? 'p-4' : 'p-5', className)}>
       <div className="flex items-start gap-3">
@@ -25,6 +27,18 @@ export function ErrorState({ title, description, onRetry, compact = false, class
             <RetryButton onRetry={onRetry} />
           </div>
         </div>
+        {onClose ? (
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="-mr-2 -mt-2 size-8 rounded-lg text-slate-500 hover:text-white"
+            aria-label="Dismiss message"
+            onClick={onClose}
+          >
+            <X className="size-4" aria-hidden="true" />
+          </Button>
+        ) : null}
       </div>
     </Card>
   )

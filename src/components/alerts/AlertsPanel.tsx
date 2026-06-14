@@ -26,7 +26,7 @@ export function AlertsPanel({ shopifyInventory, tiktokPromise, resetKey, onRetry
         fallback={() => (
           <ErrorState
             compact
-            className="h-[486px]"
+            className="h-[500px]"
             title="Unable to load TikTok inventory"
             description="Shopify alerts are still visible."
             onRetry={onRetry}
@@ -57,7 +57,7 @@ function TikTokAlertList({
 function AlertList({ alerts, loading = false }: { alerts: ReturnType<typeof buildAlerts>; loading?: boolean }) {
   if (alerts.length === 0) {
     return (
-      <Card className="flex h-[486px] flex-col items-center justify-center p-8 text-center">
+      <Card className="flex h-[500px] flex-col items-center justify-center p-8 text-center">
         <p className="text-sm font-medium text-slate-100">No active alerts</p>
         <p className="mt-1 text-sm text-slate-400">Operational queues are clear.</p>
       </Card>

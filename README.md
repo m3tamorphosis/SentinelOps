@@ -39,7 +39,11 @@ Each section has a production-style fallback. The inventory table fallback still
 
 ## Error Handling Strategy
 
-TikTok rendering is wrapped by resettable error boundaries. If TikTok fails, the page shows `Unable to load TikTok inventory` with a retry action while Shopify cards, inventory, and alerts remain functional. Retry creates a new `/tiktok_data` request and resets the affected boundaries.
+TikTok rendering is wrapped by resettable error boundaries. If TikTok fails, Shopify cards, inventory, and alerts remain functional. The inventory table keeps rendering Shopify stock and shows a dismissible toast with retry action instead of expanding the page layout. Retry creates a new `/tiktok_data` request and resets the affected boundaries.
+
+## Refresh Controls
+
+The dashboard keeps manual refresh available through the header `Refresh` action. It also includes an optional auto-refresh dropdown with `Off`, `15s`, `30s`, and `60s` intervals. Auto-refresh is off by default and uses the same route invalidation path as manual refresh, with an in-flight guard to avoid overlapping requests.
 
 ## API Simulation
 
@@ -59,7 +63,7 @@ For deterministic demos, `/tiktok_data?mode=success` and `/tiktok_data?mode=erro
 
 ## Test Product Catalog
 
-Use these products and SKUs to test inventory search, sorting, risk states, and Shopify/TikTok mismatch behavior:
+Use these 26 products and SKUs to test inventory search, sorting, pagination, risk states, and Shopify/TikTok mismatch behavior:
 
 | Product | SKU | Shopify Stock | TikTok Stock |
 | --- | --- | ---: | ---: |
@@ -79,6 +83,16 @@ Use these products and SKUs to test inventory search, sorting, risk states, and 
 | Orbit Crossbody Sling | `ORB-SLG-ONY-OS` | 68 | 64 |
 | Terra Training Mat | `TRR-MAT-GRN-72` | 11 | 9 |
 | Beacon Insulated Vest | `BCN-VST-RST-M` | 153 | 153 |
+| RidgeLine Cargo Pant | `RDL-CRG-ASH-32` | 46 | 51 |
+| Nova Seamless Tank | `NVA-TNK-BLS-M` | 63 | 57 |
+| Echo Training Glove | `ECH-GLV-BLK-L` | 22 | 31 |
+| Cinder Trail Short | `CND-SRT-RST-M` | 88 | 88 |
+| Prism Running Belt | `PRS-BLT-SMK-OS` | 16 | 13 |
+| Crest Fleece Crew | `CRS-CRW-MOS-L` | 132 | 132 |
+| Ion Recovery Wrap | `ION-WRP-GRY-OS` | 7 | 0 |
+| Atlas Duffel 40L | `ATL-DFL-BLK-40` | 71 | 66 |
+| Solstice Windbreaker | `SLS-WND-CLY-M` | 39 | 45 |
+| Tempo Knit Beanie | `TMP-BNE-CHR-OS` | 104 | 104 |
 
 ## Installation
 
