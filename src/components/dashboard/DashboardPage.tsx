@@ -1,5 +1,5 @@
 import { useRouter } from '@tanstack/react-router'
-import { Suspense, use, useState } from 'react'
+import { Suspense, use, useCallback, useEffect, useRef, useState } from 'react'
 import { AlertsPanel } from '~/components/alerts/AlertsPanel'
 import { AlertIntelligencePanel } from '~/components/alerts/AlertIntelligencePanel'
 import { KPISection } from '~/components/dashboard/KPISection'
@@ -21,17 +21,55 @@ interface DashboardPageProps {
 
 export function DashboardPage({ shopify, tiktokPromise: initialTikTokPromise, lastUpdated }: DashboardPageProps) {
   const router = useRouter()
+  const refreshInFlight = useRef(false)
+  const syncedLoaderData = useRef(false)
   const [resetKey, setResetKey] = useState(0)
   const [tiktokPromise, setTikTokPromise] = useState<Promise<TikTokData>>(initialTikTokPromise)
+  const [autoRefreshSeconds, setAutoRefreshSeconds] = useState(0)
+  const [isRefreshing, setIsRefreshing] = useState(false)
+
+  useEffect(() => {
+    if (!syncedLoaderData.current) {
+      syncedLoaderData.current = true
+      return
+    }
+
+    setResetKey((key) => key + 1)
+    setTikTokPromise(initialTikTokPromise)
+  }, [initialTikTokPromise])
+
+  const refreshDashboard = useCallback(async () => {
+    if (refreshInFlight.current) {
+      return
+    }
+
+    refreshInFlight.current = true
+    setIsRefreshing(true)
+    setResetKey((key) => key + 1)
+
+    try {
+      await router.invalidate()
+    } finally {
+      refreshInFlight.current = false
+      setIsRefreshing(false)
+    }
+  }, [router])
+
+  useEffect(() => {
+    if (autoRefreshSeconds === 0) {
+      return
+    }
+
+    const intervalId = window.setInterval(() => {
+      void refreshDashboard()
+    }, autoRefreshSeconds * 1000)
+
+    return () => window.clearInterval(intervalId)
+  }, [autoRefreshSeconds, refreshDashboard])
 
   function retryTikTok() {
     setResetKey((key) => key + 1)
     setTikTokPromise(fetchTikTokData())
-  }
-
-  function refreshDashboard() {
-    setResetKey((key) => key + 1)
-    void router.invalidate()
   }
 
   return (
@@ -41,6 +79,9 @@ export function DashboardPage({ shopify, tiktokPromise: initialTikTokPromise, la
         tiktokPromise={tiktokPromise}
         resetKey={resetKey}
         onRefresh={refreshDashboard}
+        isRefreshing={isRefreshing}
+        autoRefreshSeconds={autoRefreshSeconds}
+        onAutoRefreshSecondsChange={setAutoRefreshSeconds}
       />
       <main className="mx-auto grid max-w-[1640px] grid-cols-1 gap-5 px-4 py-4 sm:px-5 lg:px-6 xl:grid-cols-[minmax(0,1fr)_340px_360px] xl:items-start 2xl:grid-cols-[minmax(0,1fr)_380px_400px]">
         <div className="space-y-5 xl:min-w-0">

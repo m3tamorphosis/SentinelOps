@@ -21,7 +21,6 @@ function DashboardRoute() {
 
   return (
     <DashboardPage
-      key={lastUpdated}
       shopify={shopify}
       tiktokPromise={tiktokPromise}
       lastUpdated={lastUpdated}
